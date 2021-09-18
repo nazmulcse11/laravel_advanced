@@ -39,6 +39,12 @@
             </a>
             <ul class="nav nav-treeview" style="display: none;">
               <li class="nav-item">
+                <a href="{{ url('/admin/profile') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Profile</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ url('/admin/logout') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Logout</p>

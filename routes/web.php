@@ -20,6 +20,11 @@ Route::group(['prefix'=>'admin'],function(){
     Route::group(['middleware'=>'admin'],function(){
         Route::get('dashboard',[DashboardController::class,'dashboard']);
         Route::get('logout',[AdminController::class,'logout']);
+
+        Route::get('profile',[AdminController::class,'profile']);
+        Route::post('update-admin-details',[AdminController::class,'updateAdminDetails']);
+        Route::post('check-current-password',[AdminController::class,'checkCurrentPassword']);
+        Route::post('update-current-password',[AdminController::class,'updateCurrentPassword']);
     });
     
 });
