@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 
 class AdminsTableSeeder extends Seeder
@@ -15,7 +16,7 @@ class AdminsTableSeeder extends Seeder
     public function run()
     {
         $admins = [
-            ['name'=>'Md.Admin','email'=>'admin@gmail.com','password'=>'123456'],
+            ['name'=>'Md.Admin','email'=>'admin@gmail.com','password'=>Hash::make('123456')],
         ];
         Admin::insert($admins);
     }
