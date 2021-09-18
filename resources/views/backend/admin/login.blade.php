@@ -29,7 +29,7 @@
 	     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	     <span aria-hidden="true">&times;</span>
 	     </button>
-	   </div>
+	    </div>
 	  @endif
       <form action="{{ url('admin') }}" method="post">
       	@csrf
@@ -41,22 +41,25 @@
             </div>
           </div>
         </div>
+        @error('email')
+          <span class="text-danger">{{ $message }}</span>
+        @enderror 
         <div class="input-group mb-3">
           <input type="password" name="password" class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
-          </div>
+          </div> 
         </div>
+        @error('password')
+          <span class="text-danger">{{ $message }}</span>
+        @enderror 
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
+            <p>
+              <a href="javascript:void(0)">Forgot Password</a>
+            </p>
           </div>
           <!-- /.col -->
           <div class="col-4">
@@ -66,9 +69,6 @@
         </div>
       </form>
 
-      <p class="mb-1">
-        <a href="javascript:void(0)">Forgot Password</a>
-      </p>
     </div>
     <!-- /.login-card-body -->
   </div>
