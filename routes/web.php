@@ -14,9 +14,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Frontend Routes 
 Route::get('/',[IndexController::class,'index']);
-Route::match(['get','post'],'/login-register',[UserController::class,'loginRegister']);
-Route::post('/user-register',[UserController::class,'userRegister']);
-Route::get('/user-logout',[UserController::class,'userLogout']);
+Route::match(['get','post'],'login-register',[UserController::class,'loginRegister']);
+Route::post('user-register',[UserController::class,'userRegister']);
+Route::get('user-logout',[UserController::class,'userLogout']);
+Route::get('user-profile',[UserController::class,'userprofile']);
+Route::post('update-user-details',[UserController::class,'updateUserDetails']);
+Route::post('check-current-password',[UserController::class,'checkCurrentPassword']);
+Route::post('update-current-password',[UserController::class,'updateCurrentPassword']);
 
 
 // Backend Routes 

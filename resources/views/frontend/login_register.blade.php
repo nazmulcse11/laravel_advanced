@@ -60,7 +60,7 @@
                     <div class="form px-4 pt-5"> 
                       <input type="text" name="email" class="form-control" placeholder="Email or Phone"> 
                       <input type="text" name="password" class="form-control" placeholder="Password"> 
-                      <button type="submit" class="btn btn-dark btn-block">Login</button> 
+                      <button type="submit" class="btn btn-danger btn-block">Login</button> 
                     </div>
                   </form>
 
@@ -76,7 +76,7 @@
                       <input type="text" name="mobile"  value="{{ old('mobile') }}"  class="form-control" placeholder="Mobile"> 
                       <input type="password" name="password" class="form-control" placeholder="Password"> 
                       <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"> 
-                      <button type="submit" class="btn btn-dark btn-block">Signup</button> 
+                      <button type="submit" class="btn btn-danger btn-block">Signup</button> 
                     </div>
                   </form>
 

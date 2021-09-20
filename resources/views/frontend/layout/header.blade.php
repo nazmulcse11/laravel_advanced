@@ -64,7 +64,7 @@
                     <i class="fas fa-lock mr-2"></i> Logout
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a href="javascript:void(0)" class="dropdown-item">
+                  <a href="{{ url('/user-profile') }}" class="dropdown-item">
                     <i class="fas fa-user mr-2"></i> Profile
                   </a>
                 </ul>
