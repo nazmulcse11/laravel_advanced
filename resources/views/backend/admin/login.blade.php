@@ -30,7 +30,7 @@
 	     <span aria-hidden="true">&times;</span>
 	     </button>
 	    </div>
-	  @endif
+	    @endif
       <form action="{{ url('admin') }}" method="post">
       	@csrf
         <div class="input-group mb-3">

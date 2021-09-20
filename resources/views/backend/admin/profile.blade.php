@@ -99,7 +99,7 @@
                           <input type="email" name="email" value="{{ Auth::guard('admin')->user()->email }}" class="form-control" placeholder="Email">
                           @error('email')
 	                        <span class="text-danger">{{ $message }}</span>
-	                      @enderror
+	                        @enderror
                         </div>
                         
                       </div>
