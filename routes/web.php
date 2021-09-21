@@ -12,15 +12,31 @@ use App\Http\Controllers\Frontend\UserController;
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::match(['get','post'],'login',function(){return redirect('/');});
+Route::match(['get','post'],'register',function(){return redirect('/');});
+
+
 // Frontend Routes 
 Route::get('/',[IndexController::class,'index']);
-Route::match(['get','post'],'login-register',[UserController::class,'loginRegister']);
+Route::match(['get','post'],'login-register',[UserController::class,'loginRegister'])->name('login');
+
+//Social login
+Route::get('login/facebook', [UserController::class, 'redirectToFacebook']);
+Route::get('login/facebook/callback', [UserController::class, 'loginWithFacebook']);
+Route::get('login/google', [UserController::class, 'redirectToGoogle']);
+Route::get('login/google/callback', [UserController::class, 'loginWithGoogle']);
+Route::get('login/github', [UserController::class, 'redirectToGithub']);
+Route::get('login/github/callback', [UserController::class, 'loginWithGithub']);
+
 Route::post('user-register',[UserController::class,'userRegister']);
-Route::get('user-logout',[UserController::class,'userLogout']);
-Route::get('user-profile',[UserController::class,'userprofile']);
-Route::post('update-user-details',[UserController::class,'updateUserDetails']);
-Route::post('check-current-password',[UserController::class,'checkCurrentPassword']);
-Route::post('update-current-password',[UserController::class,'updateCurrentPassword']);
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('user-logout',[UserController::class,'userLogout']);
+    Route::get('user-profile',[UserController::class,'userprofile']);
+    Route::post('update-user-details',[UserController::class,'updateUserDetails']);
+    Route::post('check-current-password',[UserController::class,'checkCurrentPassword']);
+    Route::post('update-current-password',[UserController::class,'updateCurrentPassword']);
+});
+
 
 
 // Backend Routes 

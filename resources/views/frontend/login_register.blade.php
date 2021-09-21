@@ -15,7 +15,7 @@
 .form {padding: 10px;height: 300px}
 .form input {margin-bottom: 12px;border-radius: 3px}
 .form input:focus {box-shadow: none}
-.form button {margin-top: 20px}
+.form button {margin-top: 10px}
 </style>
 
 @section('content')
@@ -58,9 +58,16 @@
                   <form action="{{url('/login-register')}}" method="post">
                     @csrf
                     <div class="form px-4 pt-5"> 
-                      <input type="text" name="email" class="form-control" placeholder="Email or Phone"> 
-                      <input type="text" name="password" class="form-control" placeholder="Password"> 
-                      <button type="submit" class="btn btn-danger btn-block">Login</button> 
+                      <input type="text" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email or Phone"> 
+                      <input type="password" name="password" class="form-control" placeholder="Password"> 
+                      <button type="submit" class="btn btn-danger">Login</button>&nbsp;&nbsp;
+                      <span>Forgot Password  <a href="javascript:void(0)">Reset Here</a></span>
+                      
+                      <h4 class="mt-5">Login With</h4>
+                      <a href="{{ url('login/facebook') }}" class="btn btn-danger btn-sm"><i class="fab fa-facebook-f"></i></a> 
+                      <a href="{{ url('login/google') }}" class="btn btn-danger btn-sm"><i class="fab fa-google"></i></a> 
+                      <a href="{{ url('login/github') }}" class="btn btn-danger btn-sm"><i class="fab fa-github"></i></a> 
+
                     </div>
                   </form>
 
@@ -71,7 +78,6 @@
                     @csrf
                     <div class="form px-4"> 
                       <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Name">
-                      @error('name') <span>{{ $message }}</span> @enderror
                       <input type="email" name="email"  value="{{ old('email') }}"  class="form-control" placeholder="Email"> 
                       <input type="text" name="mobile"  value="{{ old('mobile') }}"  class="form-control" placeholder="Mobile"> 
                       <input type="password" name="password" class="form-control" placeholder="Password"> 

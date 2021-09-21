@@ -11,6 +11,8 @@ use Auth;
 use Session;
 use Validator;
 use File;
+use Socialite;
+use Exception;
 
 
 class UserController extends Controller
@@ -18,9 +20,23 @@ class UserController extends Controller
     public function loginRegister(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
+            $rules = [
+                'email'=>'required',
+                'password'=>'required',
+            ];
+            $cm = [
+                'email.required'=>'Email or Mobile is required',
+                'password.required'=>'Password is required',
+            ];
+            $this->validate($request,$rules,$cm);
+
+            
             if(Auth::attempt(['email'=>$data['email'] , 'password'=>$data['password']])){
                 return redirect('/');
-            }else{
+            }else if(Auth::attempt(['mobile'=>$data['email'] , 'password'=>$data['password']])){
+                return redirect('/');
+              }
+            else{
                 Session::flash('error-message','Invalid Email or password');
                 return redirect()->back();
             }
@@ -113,11 +129,10 @@ class UserController extends Controller
                 Image::make($image)->resize(200,200)->save($profileImgPath);
             }else{
                 if(isset($profileImage)){
-                    $imageName = Auth::guard('admin')->user()->image;
+                    $imageName = Auth::user()->image;
                 }else{
                     $imageName = '';
                 }
-                
             } 
 
             User::where('id',Auth::user()->id)
@@ -171,6 +186,86 @@ class UserController extends Controller
                 session::flash('error_message','New && Confirm New Password Not Match');
                 return redirect()->back(); 
             }
+        }
+    }
+
+    
+
+
+    //facebook login and redirect
+    public function redirectToFacebook(){
+      return Socialite::driver('facebook')->redirect();
+    }
+
+    public function loginWithFacebook(){
+      $user = Socialite::driver('facebook')->stateless()->user();
+      $finduser = User::where('fb_id', $user->id)->orWhere('email', $user->email)->first();
+
+      if($finduser){
+          Auth::login($finduser);
+          return redirect('/user-profile');
+
+      }else{
+          $newUser = new User();
+          $newUser->name      = $user->name;
+          $newUser->email     = $user->email;
+          $newUser->fb_id = $user->id;
+          $newUser->password  = bcrypt('12345678');
+          $newUser->save();
+          Auth::login($newUser);
+          return redirect('/user-profile');
+      }
+    }
+
+
+  //Login with google
+  public function redirectToGoogle(){
+    return Socialite::driver('google')->redirect();
+  }
+  
+  public function loginWithGoogle(Request $request){
+      $user = Socialite::driver('google')->stateless()->user();
+      $finduser = User::where('go_id', $user->id)->first();
+
+      if($finduser){
+          Auth::login($finduser);
+          return redirect('/user-profile');
+
+      }else{
+            $newUser = new User();
+            $newUser->name      = $user->name;
+            $newUser->email     = $user->email;
+            $newUser->go_id     = $user->id;
+            $newUser->password  = bcrypt('12345678');
+            $newUser->save();
+            Auth::login($newUser);
+            return redirect('/user-profile');
+        }
+    }
+
+
+  //Login with google
+  public function redirectToGithub(){
+    return Socialite::driver('github')->redirect();
+  }
+  
+  public function loginWithGithub(Request $request){
+      $user = Socialite::driver('github')->stateless()->user();
+      $finduser = User::where('gi_id', $user->id)->first();
+
+      if($finduser){
+          Auth::login($finduser);
+          return redirect('/user-profile');
+
+      }else{
+            $newUser = new User();
+            $newUser->name      = $user->name;
+            $newUser->email     = $user->email;
+            $newUser->gi_id     = $user->id;
+            $newUser->password  = bcrypt('12345678');
+            $newUser->save();
+            Auth::login($newUser);
+            return redirect('/user-profile');
         }
     }
 }

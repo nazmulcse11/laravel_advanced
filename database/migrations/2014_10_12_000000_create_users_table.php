@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('mobile')->nullable();
             $table->string('image')->nullable();
+            $table->string('fb_id')->nullable();
+            $table->string('go_id')->nullable();
+            $table->string('gi_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
