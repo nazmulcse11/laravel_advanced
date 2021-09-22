@@ -20,6 +20,11 @@ Route::match(['get','post'],'register',function(){return redirect('/');});
 Route::get('/',[IndexController::class,'index']);
 Route::match(['get','post'],'login-register',[UserController::class,'loginRegister'])->name('login');
 
+//confirm user account
+Route::match(['get','post'],'confirm/{code}',[UserController::class,'confirmAccount']);
+//Reset Password
+Route::match(['get','post'],'forgot-password', [UserController::class, 'forgotPassword']);
+
 //Social login
 Route::get('login/facebook', [UserController::class, 'redirectToFacebook']);
 Route::get('login/facebook/callback', [UserController::class, 'loginWithFacebook']);

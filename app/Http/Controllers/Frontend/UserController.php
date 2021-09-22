@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+// use App\Notifications\TaskNotification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use App\Models\User;
 use Auth;
 use Session;
@@ -32,7 +35,15 @@ class UserController extends Controller
 
             
             if(Auth::attempt(['email'=>$data['email'] , 'password'=>$data['password']])){
+                $userStatus = User::where('email',$data['email'])->first();
+                   if($userStatus->status==0){
+                    Auth::logout();
+                    $message = 'Your account is not activated yet.Please confirm your email to activate';
+                    Session::flash('error-message',$message);
+                    return redirect()->back();
+                   }
                 return redirect('/');
+
             }else if(Auth::attempt(['mobile'=>$data['email'] , 'password'=>$data['password']])){
                 return redirect('/');
               }
@@ -72,8 +83,27 @@ class UserController extends Controller
                 $user->name = $data['name'];
                 $user->email = $data['email'];
                 $user->mobile = $data['mobile'];
+                $user->status = 0;
                 $user->password = hash::make($data['password']);
                 $user->save();
+
+                 //Send confirmation email
+                $email = $data['email'];
+                $messageData = [
+                  'email' => $data['email'],
+                  'name' => $data['name'],
+                  'code' => base64_encode($data['email'])
+                ];
+                Mail::send('email.account_confirmation',$messageData,function($message) use($email){
+                  $message->to($email)->subject('Confirm your account');
+                });
+
+                //redirect back with success message
+                $message = 'Please confirm your email to active your account';
+                Session::flash('success-message',$message);
+                return redirect()->back();
+
+
                 Auth::login($user);
                 return redirect('/');
             }else{
@@ -83,6 +113,42 @@ class UserController extends Controller
         }
         return view('frontend.login_register');
     }
+
+
+    // confirm user account
+    public function confirmAccount($email){
+      $email = base64_decode($email);
+      $userCount = User::where('email',$email)->count();
+
+      if($userCount > 0){
+        // check user email is alerady activated or not
+        $userDetails = User::where('email',$email)->first();
+
+        if($userDetails->status == 1){
+          $message = 'Your email account is already activated. Please login';
+          Session::flash('error-message',$message);
+          return redirect('login-register');
+        }else{
+          User::where('email',$email)->update(['status'=>1]);
+
+          //Send register email
+          $messageData = [
+            'name'=>$userDetails['name'],
+            'mobile'=>$userDetails['mobile'],
+            'email'=>$email
+        ];
+
+          Mail::send('email.account_info',$messageData,function($message) use($email){
+            $message->to($email)->subject('Welcome to Web Journey');
+          });    
+
+          $message = 'Your email account is activated. You can login now';
+          Session::flash('success-message',$message); 
+          return redirect('login-register');
+        }
+      }
+    }
+
 
     //user logout
     public function userLogout(){
@@ -192,7 +258,7 @@ class UserController extends Controller
     
 
 
-    //facebook login and redirect
+    //login with facebook
     public function redirectToFacebook(){
       return Socialite::driver('facebook')->redirect();
     }
@@ -244,7 +310,7 @@ class UserController extends Controller
     }
 
 
-  //Login with google
+  //Login with github
   public function redirectToGithub(){
     return Socialite::driver('github')->redirect();
   }
@@ -268,4 +334,55 @@ class UserController extends Controller
             return redirect('/user-profile');
         }
     }
+
+    //forgot Password
+    public function forgotPassword(Request $request){
+         if($request->isMethod('post')){
+            $data = $request->all();
+            $emailCount = User::where('email',$data['email'])->count();
+
+            if($data['email'] == ''){
+              $message = 'Please enter your email';
+              Session::flash('error-message',$message);
+              return redirect()->back();
+            }
+
+            if($emailCount == 0){
+              $message = 'Email not exists ! Please enter valid email';
+              Session::flash('error-message',$message);
+              return redirect()->back();
+            }
+
+            // Generate new random password
+            $random_password = Str::random(6);
+
+            //Encode/secure password
+            $new_password = bcrypt($random_password);
+            
+            // Update password
+            User::where('email',$data['email'])->update(['password'=>$new_password]);
+            
+            // Get user name
+            $userName = User::select('name')->where('email',$data['email'])->first();
+
+            $email = $data['email'];
+            $name = $userName['name'];
+            $messageData = [
+              'email'=>$email,
+              'name'=>$name,
+              'password'=>$random_password
+            ];
+
+            Mail::send('email.new_password',$messageData,function($message) use($email){
+                $message->to($email)->subject('Your new password for Web Journey');
+              }); 
+
+             $message = 'Please check email for new password';
+             Session::flash('success-message',$message);
+             return redirect()->back();
+        }
+
+        return view('frontend.forgot_password');
+    }
+
 }

@@ -45,6 +45,14 @@
                   </div>
                   @endif
 
+                  @if(Session::has('success-message'))
+                   <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ Session::get('success-message') }}
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                   </button>
+                  </div>
+                  @endif
+
                   @if ($errors->any())
                     <div class="alert alert-danger">
                       <ul>
@@ -61,9 +69,9 @@
                       <input type="text" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email or Phone"> 
                       <input type="password" name="password" class="form-control" placeholder="Password"> 
                       <button type="submit" class="btn btn-danger">Login</button>&nbsp;&nbsp;
-                      <span>Forgot Password  <a href="javascript:void(0)">Reset Here</a></span>
+                      <span>Forgot Password  <a href="{{ url('forgot-password') }}">Reset Here</a></span>
                       
-                      <h4 class="mt-5">Login With</h4>
+                      <p class="mt-5 mb-0">Login With</p>
                       <a href="{{ url('login/facebook') }}" class="btn btn-danger btn-sm"><i class="fab fa-facebook-f"></i></a> 
                       <a href="{{ url('login/google') }}" class="btn btn-danger btn-sm"><i class="fab fa-google"></i></a> 
                       <a href="{{ url('login/github') }}" class="btn btn-danger btn-sm"><i class="fab fa-github"></i></a> 
