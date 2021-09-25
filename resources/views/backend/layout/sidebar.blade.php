@@ -30,6 +30,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ url('/admin/webnotification') }}" class="nav-link">
+              <i class="nav-icon fas fa-bell"></i>
+              <p>
+                Web Notification
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-bars"></i>
               <p>

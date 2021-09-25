@@ -1,6 +1,6 @@
 @extends('frontend.layout.app')
 
-@section('title','Web Journey | Courses')
+@section('title','Login | Register')
 
 <style type="text/css">
 .fa-bell{margin-top: 5px;}
@@ -71,7 +71,7 @@
                       <button type="submit" class="btn btn-danger">Login</button>&nbsp;&nbsp;
                       <span>Forgot Password  <a href="{{ url('forgot-password') }}">Reset Here</a></span>
                       
-                      <p class="mt-5 mb-0">Login With</p>
+                      <p class="mt-4 mb-0">Login With</p>
                       <a href="{{ url('login/facebook') }}" class="btn btn-danger btn-sm"><i class="fab fa-facebook-f"></i></a> 
                       <a href="{{ url('login/google') }}" class="btn btn-danger btn-sm"><i class="fab fa-google"></i></a> 
                       <a href="{{ url('login/github') }}" class="btn btn-danger btn-sm"><i class="fab fa-github"></i></a> 

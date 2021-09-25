@@ -29,18 +29,43 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the card's
-                  content.
-                </p>
-
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+              <div class="card-header">
+                <h3 class="card-title">Enrolls</h3>
               </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($enrolls as $key=>$enroll)
+                    <tr>
+                      <td>{{ $key+1; }}</td>
+                      <td>{{ $enroll['name'] }}</td>
+                      <td>{{ $enroll['mobile'] }}</td>
+                      <td>{{ $enroll['course'] }}</td>
+                      <td>
+                        @if($enroll['status'] == 0)
+                        <a href="{{ url('admin/change-enroll-status/'.$enroll->id) }}" class="btn btn-sm btn-danger">Pending</a>
+                        @else
+                        <a href="{{ url('admin/change-enroll-status/'.$enroll->id) }}" class="btn btn-sm btn-success">Active</a>
+                        @endif
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
           </div>
         </div>
         <!-- /.row -->

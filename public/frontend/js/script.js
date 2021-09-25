@@ -34,3 +34,32 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
   });
+
+
+  // enroll now
+  $('#enroll_form').on('submit',function(e){
+    e.preventDefault();
+    let name = $('#name').val();
+    let mobile = $('#mobile').val();
+    let course = $('#course').val();
+    // alert(name + mobile + course);
+    $.ajax({
+      url:'/enroll-for-course',
+      method:'post',
+      data:{name:name,mobile:mobile,course:course},
+      success:function(data){ 
+        
+        if(data.status =='true'){
+          $('#enroll_success').html('<p class="text-success">Enroll success. We will contact you soon.</p>');
+          $('#enroll_form')['0'].reset();
+          $('#name_error').text('');
+          $('#mobile_error').text('');
+          $('#course_error').text('');
+        }
+      },error:function(data){
+          $('#name_error').text(data.responseJSON.errors.name);
+          $('#mobile_error').text(data.responseJSON.errors.mobile);
+          $('#course_error').text(data.responseJSON.errors.course);
+       }
+    });
+  })
