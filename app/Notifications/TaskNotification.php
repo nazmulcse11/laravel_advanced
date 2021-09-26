@@ -7,20 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskNotification extends Notification
+class TaskNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $name = '';
-    public $email = '';
-    public $new_password = '';
+    public $title = '';
 
 
 
-    public function __construct($name,$email,$new_password){
-        $this->name = $name;
-        $this->email = $email;
-        $this->new_password = $new_password;
+    public function __construct($title){
+        $this->title = $title;
     }
 
 
@@ -36,11 +32,9 @@ class TaskNotification extends Notification
         // ->line('Your new password for Web Journey Login')
         // ->line($this->new_password);
 
-         $name = $this->name;
-         $email = $this->email;
-         $new_password = $this->new_password;
+         $title = $this->title;
 
-        return (new MailMessage)->view('email.new_password',compact('name','email','new_password')) ;
+        return (new MailMessage)->view('email.notification_email',compact('title')) ;
 
     }
 

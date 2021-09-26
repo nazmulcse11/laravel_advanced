@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Add Notification</h1>
+            <h1 class="m-0">{{ $title }}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -31,17 +31,17 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                	<a href="" class="btn btn-primary btn-sm">Add Notification</a>
+                	<a href="" class="btn btn-primary btn-sm">{{ $title }}</a>
                 </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              	<form class="form-horizontal" method="post" action="{{ url('admin/add-edit-notification')}}">
+              	<form class="form-horizontal" method="post" @if(!empty($notification)) action="{{ url('admin/add-edit-notification/'.$notification['id'])}}" @else action="{{ url('admin/add-edit-notification')}}" @endif>
                 @csrf
                   <div class="form-group row">
                     <label for="title" class="col-sm-2 col-form-label">Notification</label>
                     <div class="col-sm-10">
-                      <input type="text" name="title" value="" class="form-control" placeholder="Notification">
+                      <input type="text" name="title" @if(!empty($notification))value="{{ $notification['title'] }}" @endif class="form-control" placeholder="Notification">
                       @error('title')
                         <span class="text-danger">{{ $message }}</span>
                        @enderror
@@ -52,11 +52,14 @@
                     <label for="course" class="col-sm-2 col-form-label">Select Course</label>
                     <div class="col-sm-10">
                       <select  name="course" value="" class="form-control">
-                      	<option value="">Select Course</option>
+                      	 <option @if(!empty($notification)) value="{{ $notification['course'] }}" selected @endif>{{ ucwords(str_replace('_',' ',$notification['course'])) }}
+                         </option>
+                        <option value="">Select Course</option>
                       	<option value="course_a">Course A</option>
                       	<option value="course_b">Course B</option>
                       	<option value="course_c">Course C</option>
                       	<option value="course_d">Course D</option>
+                         
                       </select>
                        @error('course')
                         <span class="text-danger">{{ $message }}</span>
@@ -66,7 +69,7 @@
 
                   <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Add Notification</button>
+                      <button type="submit" class="btn btn-danger">{{ $title }}</button>
                     </div>
                   </div>
                 </form>

@@ -7,14 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserWebNotification extends Notification
+class UserWebNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    public $web_id='';
     public $title='';
     public $course='';
 
 
-    public function __construct($title,$course){
+    public function __construct($web_id,$title,$course){
+        $this->web_id = $web_id;
         $this->title = $title;
         $this->course = $course;
     }
@@ -35,6 +37,7 @@ class UserWebNotification extends Notification
 
     public function toArray($notifiable){
         return [
+            'web_id'=>$this->web_id,
             'title'=>$this->title,
             'course'=>$this->course,
         ];

@@ -191,6 +191,43 @@
                 <li>Add courier name and tracking number for order</li>
                 <li>Send email and sms to the customer when admin update order status</li>
                 <li>Create order invoice</li>
+                <li>Generate Barcode / QR code </li>
+                <li>Create order invoice PDF</li>
+                <li>Print pdf order invoice</li>
+                <hr>
+
+                <h6 class="mt-3">8. Product Stock Management</h6>
+                <li>Reduce stock after placed order</li>
+                <hr>
+
+                <h6 class="mt-3">9. Dynamic Page Module</h6>
+                <li>Add/Edit/Delete dynamic pages</li>
+                <li>Active/Inactive dynamic pages</li>
+                <hr>
+
+                <h6 class="mt-3">10. Chart Module</h6>
+                <li>Charts</li>
+                <li>Graphs</li>
+                <hr>
+
+                <h6 class="mt-3">11. Loss/Profit Module</h6>
+                <li>Daily loss profit</li>
+                <li>Weekly loss profit</li>
+                <li>Monthly loss profit</li>
+                <li>Yearly loss profit</li>
+                <hr>
+
+                <h6 class="mt-3">12. User Module</h6>
+                <li>Disply all users</li>
+                <li>Active/Inactive users</li>
+                <li>User Status</li>
+                <hr>
+
+                <h6 class="mt-3">13. User Role Permission</h6>
+                <li>Three types admin</li>
+                <li>Super Admin, Admin, Sub Admin</li>
+                <li>Super admin can manage everything</li>
+                <li>Admin and Subadmins can manage their roles</li>
               </div>
 
             </div>
@@ -263,12 +300,27 @@
                 <li>Customer can view his all order with details like(order details, delivery address, product details)</li>
                 <hr>
 
-                <h6 class="mt-3">9. My Account Page</h6>
+                <h6 class="mt-3">9. Website Security</h6>
+                <li>Prevent disable/out of stock products to order</li>
+                <li>Prevent disable attributes/categories to order</li>
+                <hr>
+
+                <h6 class="mt-3">10. Product Search Functionality</h6>
+                <li>Search products by name, code, color</li>
+                <li>Search products by category, brand, attributes</li>
+                <hr>
+
+                <h6 class="mt-3">11. Dynamic Page functionality</h6>
+                <li>Display Dynamic Pages</li>
+                <li></li>
+                <hr>
+
+                <h6 class="mt-3">12. My Account Page</h6>
                 <li>User can update his account info and password</li>
                 <li>user can reset his password</li>
                 <hr>
 
-                <h6 class="mt-3">10. Login Register Page</h6>
+                <h6 class="mt-3">13. Login Register Page</h6>
                 <li>Login system (with facebook and gmail)</li>
                 <li>Login system</li>
                 <li>After register user will get an email to active his account</li>
@@ -326,6 +378,18 @@
               <p class="card-text">Laravel XL</p>
               <hr>
               <p class="card-text">Laravel Mail</p>
+              <hr>
+              <p class="card-text">Send Otp Sms</p>
+              <hr>
+              <p class="card-text">Send bulk Sms</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile after add new product/ create discount/ for occussion</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile after placed order</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile after shipped order</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile if order status changed</p>
               <hr>
                
 
@@ -444,6 +508,43 @@
                 <li>Add courier name and tracking number for order</li>
                 <li>Send email and sms to the customer when admin update order status</li>
                 <li>Create order invoice</li>
+                <li>Generate Barcode / QR code </li>
+                <li>Create order invoice PDF</li>
+                <li>Print pdf order invoice</li>
+                <hr>
+
+                <h6 class="mt-3">8. Product Stock Management</h6>
+                <li>Reduce stock after placed order</li>
+                <hr>
+
+                <h6 class="mt-3">9. Dynamic Page Module</h6>
+                <li>Add/Edit/Delete dynamic pages</li>
+                <li>Active/Inactive dynamic pages</li>
+                <hr>
+
+                <h6 class="mt-3">10. Chart Module</h6>
+                <li>Charts</li>
+                <li>Graphs</li>
+                <hr>
+
+                <h6 class="mt-3">11. Loss/Profit Module</h6>
+                <li>Daily loss profit</li>
+                <li>Weekly loss profit</li>
+                <li>Monthly loss profit</li>
+                <li>Yearly loss profit</li>
+                <hr>
+
+                <h6 class="mt-3">12. User Module</h6>
+                <li>Disply all users</li>
+                <li>Active/Inactive users</li>
+                <li>User Status</li>
+                <hr>
+
+                <h6 class="mt-3">13. User Role Permission</h6>
+                <li>Three types admin</li>
+                <li>Super Admin, Admin, Sub Admin</li>
+                <li>Super admin can manage everything</li>
+                <li>Admin and Subadmins can manage their roles</li>
               </div>
 
             </div>
@@ -516,12 +617,27 @@
                 <li>Customer can view his all order with details like(order details, delivery address, product details)</li>
                 <hr>
 
-                <h6 class="mt-3">9. My Account Page</h6>
+                <h6 class="mt-3">9. Website Security</h6>
+                <li>Prevent disable/out of stock products to order</li>
+                <li>Prevent disable attributes/categories to order</li>
+                <hr>
+
+                <h6 class="mt-3">10. Product Search Functionality</h6>
+                <li>Search products by name, code, color</li>
+                <li>Search products by category, brand, attributes</li>
+                <hr>
+
+                <h6 class="mt-3">11. Dynamic Page functionality</h6>
+                <li>Display Dynamic Pages</li>
+                <li></li>
+                <hr>
+
+                <h6 class="mt-3">12. My Account Page</h6>
                 <li>User can update his account info and password</li>
                 <li>user can reset his password</li>
                 <hr>
 
-                <h6 class="mt-3">10. Login Register Page</h6>
+                <h6 class="mt-3">13. Login Register Page</h6>
                 <li>Login system (with facebook and gmail)</li>
                 <li>Login system</li>
                 <li>After register user will get an email to active his account</li>
@@ -579,6 +695,18 @@
               <p class="card-text">Laravel XL</p>
               <hr>
               <p class="card-text">Laravel Mail</p>
+              <hr>
+              <p class="card-text">Send Otp Sms</p>
+              <hr>
+              <p class="card-text">Send bulk Sms</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile after add new product/ create discount/ for occussion</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile after placed order</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile after shipped order</p>
+              <hr>
+              <p class="card-text">Send Sms to user mobile if order status changed</p>
               <hr>
                
 

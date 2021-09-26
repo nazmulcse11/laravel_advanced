@@ -62,7 +62,7 @@ Route::group(['prefix'=>'admin'],function(){
     Route::post('check-current-password',[AdminController::class,'checkCurrentPassword']);
     Route::post('update-current-password',[AdminController::class,'updateCurrentPassword']);
     Route::get('webnotification',[WebnotificationController::class,'webnotification']);
-    Route::match(['get','post'],'add-edit-notification',[WebnotificationController::class,'addEditNotification']);
+    Route::match(['get','post'],'add-edit-notification/{id?}',[WebnotificationController::class,'addEditNotification']);
     Route::get('delete-record/{recordid}',[WebnotificationController::class,'deleteWebnotification']);
 
     

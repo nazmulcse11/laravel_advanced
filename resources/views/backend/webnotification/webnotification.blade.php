@@ -60,7 +60,7 @@
                         {{ \Carbon\Carbon::parse($notifi->created_at)->format('d/m/Y')}} <br> -->
                       </td>
                       <td>
-                        <a href="{{ url('admin/edit-webnotification/'.$notifi['id'] ) }}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
+                        <a href="{{ url('admin/add-edit-notification/'.$notifi['id'] ) }}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
                         <a record="record" recordid="{{ $notifi['id'] }}" class="btn btn-sm btn-danger confirmDelete"><i class="fas fa-times"></i></a>
                       </td>
                     </tr>

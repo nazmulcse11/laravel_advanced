@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
-// use App\Notifications\TaskNotification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\User;
@@ -20,6 +19,7 @@ use Exception;
 
 class UserController extends Controller
 {
+
     public function loginRegister(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();

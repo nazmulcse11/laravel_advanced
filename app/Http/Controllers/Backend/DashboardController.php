@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Enroll;
+use Toastr;
 
 class DashboardController extends Controller
 {
@@ -21,6 +22,7 @@ class DashboardController extends Controller
             $status = 1;
         }
         Enroll::where('id',$id)->update(['status'=>$status]);
+        Toastr::success('Status Successfully Updated', 'Success', ["positionClass" => "toast-top-right","closeButton"=> "true"]);
         return redirect()->back();
 
     }
