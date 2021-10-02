@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Notifications\RegisterNotification;
+use App\Notifications\AccountConfirmNotification;
+use App\Notifications\PassResetNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Models\User;
 use Auth;
 use Session;
@@ -15,6 +19,7 @@ use Validator;
 use File;
 use Socialite;
 use Exception;
+use DB;
 
 
 class UserController extends Controller
@@ -63,7 +68,7 @@ class UserController extends Controller
             $rules = [
                 'name'=>'required',
                 'email'=>'required|email|unique:users',
-                'mobile'=>'required',
+                'mobile'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11|max:11',
                 'password'=>'required',
                 'confirm_password'=>'required',
             ];
@@ -71,8 +76,11 @@ class UserController extends Controller
                 'name.required'=>'Name is required',
                 'email.required'=>'Email is required',
                 'email.email'=>'Email must be a valid email',
-                'email.exists'=>'Email already exists',
+                'email.unique'=>'Email already taken',
                 'mobile.required'=>'Mobile number is required',
+                'mobile.regex'=>'Mobile number contains only number',
+                'mobile.min'=>'Mobile number not less than 11 digit',
+                'mobile.max'=>'Mobile number not grater than 11 digit',
                 'password.required'=>'Password is required',
                 'confirm_password.required'=>'Confirm Password is required',
             ];
@@ -87,25 +95,17 @@ class UserController extends Controller
                 $user->password = hash::make($data['password']);
                 $user->save();
 
-                 //Send confirmation email
-                $email = $data['email'];
-                $messageData = [
-                  'email' => $data['email'],
-                  'name' => $data['name'],
-                  'code' => base64_encode($data['email'])
-                ];
-                Mail::send('email.account_confirmation',$messageData,function($message) use($email){
-                  $message->to($email)->subject('Confirm your account');
-                });
+                //Send account confirmation email after register new user
+                $lastUserID = DB::getPdo()->lastInsertId();
+                $lastuserDetails = User::select('name','email')->where('id',$lastUserID)->first();
+                $code = base64_encode($lastuserDetails->email);
+                $user = User::find($lastUserID);
+                 Notification::send($user, new RegisterNotification($lastuserDetails->name,$code));
 
                 //redirect back with success message
                 $message = 'Please confirm your email to active your account';
                 Session::flash('success-message',$message);
                 return redirect()->back();
-
-
-                Auth::login($user);
-                return redirect('/');
             }else{
               Session::flash('error-message','Password && confirm password does not match');
               return redirect()->back();
@@ -122,25 +122,18 @@ class UserController extends Controller
 
       if($userCount > 0){
         // check user email is alerady activated or not
-        $userDetails = User::where('email',$email)->first();
+        $userStatus = User::select('status')->where('email',$email)->first();
 
-        if($userDetails->status == 1){
+        if($userStatus->status == 1){
           $message = 'Your email account is already activated. Please login';
           Session::flash('error-message',$message);
           return redirect('login-register');
         }else{
+          //update user status
           User::where('email',$email)->update(['status'=>1]);
-
-          //Send register email
-          $messageData = [
-            'name'=>$userDetails['name'],
-            'mobile'=>$userDetails['mobile'],
-            'email'=>$email
-        ];
-
-          Mail::send('email.account_info',$messageData,function($message) use($email){
-            $message->to($email)->subject('Welcome to Web Journey');
-          });    
+          //send email to user after confirm/activate his account
+          $user = User::where('email',$email)->first();
+          Notification::send($user, new AccountConfirmNotification($user->name,$user->mobile,$user->email));
 
           $message = 'Your email account is activated. You can login now';
           Session::flash('success-message',$message); 
@@ -172,12 +165,15 @@ class UserController extends Controller
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'email' => 'required|email|unique:users,email,'.$user_id,
+                'image' => 'mimes:jpeg,bmp,png|file|max:1024',
             ];
             $customMessage = [
                 'name.required' => 'Name is required',
                 'name.regex' => 'Valid name is required',
                 'email.required' => 'Email is required',
                 'email.email' => 'Valid Email is required',
+                'image.mimes' => 'Image type must be jpeg png or bmp',
+                'image.max' => 'Image must be less than 1MB',
             ];
             $this->validate($request, $rules, $customMessage);
             
@@ -255,8 +251,6 @@ class UserController extends Controller
         }
     }
 
-    
-
 
     //login with facebook
     public function redirectToFacebook(){
@@ -314,6 +308,7 @@ class UserController extends Controller
   public function redirectToGithub(){
     return Socialite::driver('github')->redirect();
   }
+
   
   public function loginWithGithub(Request $request){
       $user = Socialite::driver('github')->stateless()->user();
@@ -335,11 +330,13 @@ class UserController extends Controller
         }
     }
 
+
     //forgot Password
     public function forgotPassword(Request $request){
          if($request->isMethod('post')){
             $data = $request->all();
             $emailCount = User::where('email',$data['email'])->count();
+            $user = User::where('email',$data['email'])->first();
 
             if($data['email'] == ''){
               $message = 'Please enter your email';
@@ -355,27 +352,13 @@ class UserController extends Controller
 
             // Generate new random password
             $random_password = Str::random(6);
-
             //Encode/secure password
             $new_password = bcrypt($random_password);
-            
             // Update password
             User::where('email',$data['email'])->update(['password'=>$new_password]);
             
-            // Get user name
-            $userName = User::select('name')->where('email',$data['email'])->first();
-
-            $email = $data['email'];
-            $name = $userName['name'];
-            $messageData = [
-              'email'=>$email,
-              'name'=>$name,
-              'password'=>$random_password
-            ];
-
-            Mail::send('email.new_password',$messageData,function($message) use($email){
-                $message->to($email)->subject('Your new password for Web Journey');
-              }); 
+            //Send new Password
+            Notification::send($user, new PassResetNotification($random_password));
 
              $message = 'Please check email for new password';
              Session::flash('success-message',$message);

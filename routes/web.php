@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Backend\WebnotificationController;
+use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\UserController;
-
 
 
 
@@ -55,15 +54,22 @@ Route::group(['prefix'=>'admin'],function(){
 
     Route::get('dashboard',[DashboardController::class,'dashboard']);
     Route::get('change-enroll-status/{id}',[DashboardController::class,'enrollStatus']);
+    Route::get('mark-as-read',[DashboardController::class,'markAsRead']);
+    Route::get('delete-enroll/{recordid}',[DashboardController::class,'deleteEnroll']);
+
+    Route::get('course',[CourseController::class,'course']);
+    Route::match(['get','post'],'add-edit-course/{id?}',[CourseController::class,'addEditCourse']);
+    Route::get('delete-course/{recordid}',[CourseController::class,'deleteCourse']);
+
+    Route::get('user',[App\Http\Controllers\Backend\UserController::class,'user']);
+    Route::get('delete-user/{recordid}',[App\Http\Controllers\Backend\UserController::class,'deleteUser']);
 
     Route::get('logout',[AdminController::class,'logout']);
     Route::get('profile',[AdminController::class,'profile']);
     Route::post('update-admin-details',[AdminController::class,'updateAdminDetails']);
     Route::post('check-current-password',[AdminController::class,'checkCurrentPassword']);
     Route::post('update-current-password',[AdminController::class,'updateCurrentPassword']);
-    Route::get('webnotification',[WebnotificationController::class,'webnotification']);
-    Route::match(['get','post'],'add-edit-notification/{id?}',[WebnotificationController::class,'addEditNotification']);
-    Route::get('delete-record/{recordid}',[WebnotificationController::class,'deleteWebnotification']);
+    
 
     
 

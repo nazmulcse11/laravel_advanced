@@ -15,7 +15,12 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="rounded-circle" src="{{ asset('frontend/images/profile/'.Auth::user()->image) }}" alt="User profile picture">
+                  @if(Auth::user()->image)
+                  <img style="width:100%" class="rounded-circle" src="{{ asset('frontend/images/profile/'.Auth::user()->image) }}" alt="User profile picture">
+                  @else
+                  <img style="width:100%" class="rounded-circle" src="{{ asset('frontend/images/profile/no_image.png') }}" alt="User profile picture">
+                  @endif
+
                 </div>
 
                 <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
@@ -23,18 +28,9 @@
                 <p class="text-muted text-center">Software Engineer</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Followers</b> <a class="float-right">1,322</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Following</b> <a class="float-right">543</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Friends</b> <a class="float-right">13,287</a>
-                  </li>
+                  <li class="list-group-item">{{ Auth::user()->email }}</li>
+                  <li class="list-group-item">{{ Auth::user()->mobile }}</li>
                 </ul>
-
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -98,16 +94,19 @@
                           <input type="text" name="mobile" value="{{ Auth::user()->mobile }}" class="form-control" placeholder="Mobile">
                           @error('mobile')
 	                        <span class="text-danger">{{ $message }}</span>
-	                      @enderror
+	                       @enderror
                         </div>
                       </div>
                       <div class="form-group row mt-3">
                         <label for="image" class="col-sm-2 col-form-label">P.Image</label>
                         <div class="col-sm-10">
                           <input type="file" name="image" class="form-control">
+                          @error('image')
+                          <span class="text-danger">{{ $message }}</span>
+                         @enderror
                         </div>
                       </div>
-                      <div class="form-group row mt-5">
+                      <div class="form-group row mt-5 mb-4">
                         <div class="offset-sm-2 col-sm-10">
                           <button type="submit" class="btn btn-danger">Update Profile</button>
                         </div>
@@ -138,7 +137,7 @@
                           <input type="password" name="confirm_new_password" class="form-control" placeholder="Confirm New Password">
                         </div>
                       </div>
-                      <div class="form-group row mt-5">
+                      <div class="form-group row my-5">
                         <div class="offset-sm-3 col-sm-9">
                           <button type="submit" class="btn btn-danger">Update Password</button>
                         </div>

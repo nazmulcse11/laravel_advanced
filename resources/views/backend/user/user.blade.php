@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 
-@section('title','Dashboard')
+@section('title','Users')
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -30,7 +30,7 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Enrolls</h3>
+                <h3 class="card-title">Users</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -40,29 +40,29 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Mobile</th>
-                    <th>Course</th>
+                    <th>Email</th>
                     <th>Status</th>
                     <th>Create Date</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($enrolls as $key=>$enroll)
+                    @foreach($users as $key=>$user)
                     <tr>
                       <td>{{ $key+1; }}</td>
-                      <td>{{ $enroll['name'] }}</td>
-                      <td>{{ $enroll['mobile'] }}</td>
-                      <td>{{ $enroll['course'] }}</td>
+                      <td>{{ $user['name'] }}</td>
+                      <td>{{ $user['mobile'] }}</td>
+                      <td>{{ $user['email'] }}</td>
                       <td>
-                        @if($enroll['status'] == 0)
-                        <a href="{{ url('admin/change-enroll-status/'.$enroll->id) }}" onclick="return confirm('Are you sure to change status')" class="btn btn-sm btn-success">New</a>
+                        @if($user['status'] == 0)
+                        <span class="btn btn-sm btn-danger">Inactive</span>
                         @else
-                        <a href="{{ url('admin/change-enroll-status/'.$enroll->id) }}" onclick="return confirm('Are you sure to change status')" class="btn btn-sm btn-danger">Old</a>
+                        <span class="btn btn-sm btn-success">Active</span>
                         @endif
                       </td>
-                      <td>{{ $enroll['created_at']->toDateString() }}</td>
+                      <td>{{ $user['created_at']->toDateString() }}</td>
                       <td>
-                        <a record="enroll" recordid="{{ $enroll['id'] }}" class="btn btn-sm btn-danger confirmDelete"><i class="fas fa-times"></i>
+                        <a record="user" recordid="{{ $user['id'] }}" class="btn btn-sm btn-danger confirmDelete"><i class="fas fa-times"></i>
                         </a>
                       </td>
                     </tr>

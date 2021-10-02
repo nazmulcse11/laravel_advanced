@@ -7,16 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskNotification extends Notification implements ShouldQueue
+class PassResetNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    public $password = '';
 
-    public $title = '';
-
-    public function __construct($title){
-        $this->title = $title;
+    public function __construct($password){
+        $this->password = $password;
     }
-
 
     public function via($notifiable){
         return ['mail'];
@@ -24,15 +22,12 @@ class TaskNotification extends Notification implements ShouldQueue
 
 
     public function toMail($notifiable){
-        // return (new MailMessage)
-        // ->line($this->name);
-
-        $title = $this->title;
-        return (new MailMessage)->view('email.notification_email',compact('title')) ;
+        $password = $this->password;
+        return (new MailMessage)->view('email.new_password',compact('password'));
     }
 
-
-    public function toArray($notifiable){
+    public function toArray($notifiable)
+    {
         return [
             //
         ];

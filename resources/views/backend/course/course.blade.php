@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 
-@section('title','Dashboard')
+@section('title','Course')
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -10,12 +10,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Web Notification</h1>
+            <h1 class="m-0">Courses</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
-              <li class="breadcrumb-item active">Notification</li>
+              <li class="breadcrumb-item active">Course</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,7 +31,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                	<a href="{{ url('/admin/add-edit-notification') }}" class="btn btn-primary btn-sm">Add Notification</a>
+                	<a href="{{ url('/admin/add-edit-course') }}" class="btn btn-primary btn-sm">Add Course</a>
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -42,26 +42,22 @@
                     <th>#</th>
                     <th>title</th>
                     <th>course</th>
-                    <th>Create_at</th>
+                    <th>Create Date</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($notifications as $key=> $notifi)
+                    @foreach($courses as $key=> $course)
                     <tr>
                     	<td>{{ $key+1 }}</td>
-                      <td>{{ $notifi['title'] }}</td>
-                      <td>{{ $notifi['course'] }}</td>
+                      <td>{{ $course['title'] }}</td>
+                      <td>{{ $course['course'] }}</td>
                       <td>
-                        {{ $notifi['created_at']->toDateString() }} <br>
-                       <!--  {{ $notifi['created_at']->toFormattedDateString() }} <br>
-                        {{ $notifi->created_at->toDayDateTimeString() }} <br>
-                        {{ \Carbon\Carbon::parse($notifi->created_at)->format('Y/m/d')}} <br>
-                        {{ \Carbon\Carbon::parse($notifi->created_at)->format('d/m/Y')}} <br> -->
+                        {{ $course['created_at']->toDateString() }}
                       </td>
                       <td>
-                        <a href="{{ url('admin/add-edit-notification/'.$notifi['id'] ) }}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
-                        <a record="record" recordid="{{ $notifi['id'] }}" class="btn btn-sm btn-danger confirmDelete"><i class="fas fa-times"></i></a>
+                        <a href="{{ url('admin/add-edit-course/'.$course['id'] ) }}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
+                        <a record="course" recordid="{{ $course['id'] }}" class="btn btn-sm btn-danger confirmDelete"><i class="fas fa-times"></i></a>
                       </td>
                     </tr>
                     @endforeach

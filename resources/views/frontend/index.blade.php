@@ -1,6 +1,6 @@
 @extends('frontend.layout.app')
 
-@section('title','Web Journey | Courses')
+@section('title','Laravel Best Online Course in Bangla - Four Courses(A,B,C,D)')
 
 @section('content')
       <!-- content section -->
@@ -349,11 +349,11 @@
               <hr>
               <p class="card-text">Data Tables</p>
               <hr>
-              <p class="card-text">Laravel Socialite</p>
-              <hr>
               <p class="card-text">Laravel dompdf</p>
               <hr>
               <p class="card-text">Laravel recaptcha</p>
+              <hr>
+              <p class="card-text">Laravel Socialite</p>
               <hr>
               <p class="card-text">Laravel Facebook Login API</p>
               <hr>
@@ -391,7 +391,14 @@
               <hr>
               <p class="card-text">Send Sms to user mobile if order status changed</p>
               <hr>
-               
+              <p class="card-text">Laravel Barcode</p>
+              <hr>
+              <p class="card-text">Laravel Qr-Code</p>
+              <hr>
+              <p class="card-text">Laravel Charts</p>
+              <hr>
+              <p class="card-text">How to Use Rest API in Laravel Application</p>
+              <hr> 
 
             </div>
             <div class="card-footer">
@@ -666,11 +673,11 @@
               <hr>
               <p class="card-text">Data Tables</p>
               <hr>
-              <p class="card-text">Laravel Socialite</p>
-              <hr>
               <p class="card-text">Laravel dompdf</p>
               <hr>
               <p class="card-text">Laravel recaptcha</p>
+              <hr>
+              <p class="card-text">Laravel Socialite</p>
               <hr>
               <p class="card-text">Laravel Facebook Login API</p>
               <hr>
@@ -707,6 +714,14 @@
               <p class="card-text">Send Sms to user mobile after shipped order</p>
               <hr>
               <p class="card-text">Send Sms to user mobile if order status changed</p>
+              <hr>
+              <p class="card-text">Laravel Barcode</p>
+              <hr>
+              <p class="card-text">Laravel Qr-Code</p>
+              <hr>
+              <p class="card-text">Laravel Charts</p>
+              <hr>
+              <p class="card-text">How to Use Rest API in Laravel Application</p>
               <hr>
                
 

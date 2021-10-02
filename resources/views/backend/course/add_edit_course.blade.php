@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 
-@section('title','Add Edit Notification')
+@section('title','Add Edit Course')
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -15,7 +15,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
-              <li class="breadcrumb-item active">Add Edit Notification</li>
+              <li class="breadcrumb-item active">Add Edit Course</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -36,12 +36,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              	<form class="form-horizontal" method="post" @if(!empty($notification)) action="{{ url('admin/add-edit-notification/'.$notification['id'])}}" @else action="{{ url('admin/add-edit-notification')}}" @endif>
+              	<form class="form-horizontal" method="post" @if(!empty($course)) action="{{ url('admin/add-edit-course/'.$course['id'])}}" @else action="{{ url('admin/add-edit-course')}}" @endif>
                 @csrf
                   <div class="form-group row">
-                    <label for="title" class="col-sm-2 col-form-label">Notification</label>
+                    <label for="title" class="col-sm-2 col-form-label">Course</label>
                     <div class="col-sm-10">
-                      <input type="text" name="title" @if(!empty($notification))value="{{ $notification['title'] }}" @endif class="form-control" placeholder="Notification">
+                      <input type="text" name="title" @if(!empty($course))value="{{ $course['title'] }}" @endif class="form-control" placeholder="Course Title">
                       @error('title')
                         <span class="text-danger">{{ $message }}</span>
                        @enderror
@@ -52,7 +52,7 @@
                     <label for="course" class="col-sm-2 col-form-label">Select Course</label>
                     <div class="col-sm-10">
                       <select  name="course" value="" class="form-control">
-                      	 <option @if(!empty($notification)) value="{{ $notification['course'] }}" selected @endif>{{ ucwords(str_replace('_',' ',$notification['course'])) }}
+                      	 <option @if(!empty($course)) value="{{ $course['course'] }}" selected @endif>{{ ucwords(str_replace('_',' ',$course['course'])) }}
                          </option>
                         <option value="">Select Course</option>
                       	<option value="course_a">Course A</option>

@@ -10,13 +10,13 @@ use Illuminate\Notifications\Notification;
 class UserWebNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-    public $web_id='';
+    public $course_id='';
     public $title='';
     public $course='';
 
 
-    public function __construct($web_id,$title,$course){
-        $this->web_id = $web_id;
+    public function __construct($course_id,$title,$course){
+        $this->course_id = $course_id;
         $this->title = $title;
         $this->course = $course;
     }
@@ -35,11 +35,11 @@ class UserWebNotification extends Notification implements ShouldQueue
     }
 
 
-    public function toArray($notifiable){
-        return [
-            'web_id'=>$this->web_id,
-            'title'=>$this->title,
-            'course'=>$this->course,
-        ];
-    }
+public function toArray($notifiable){
+    return [
+        'course_id'=>$this->course_id,
+        'title'=>$this->title,
+        'course'=>$this->course,
+    ];
+}
 }

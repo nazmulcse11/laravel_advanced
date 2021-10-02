@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Enroll;
 use Toastr;
+use DB;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -26,4 +28,20 @@ class DashboardController extends Controller
         return redirect()->back();
 
     }
+
+    // delete delete enroll with notification
+    public function deleteEnroll($id){
+        Enroll::findOrFail($id)->delete();
+        DB::table('notifications')->where('data->enroll_id', $id)->delete();
+        $message = "Enroll Successfully Deleted";
+        Toastr::success($message, "Success", ["positionClass" => "toast-top-right","closeButton"=> "true"]);
+        return redirect()->back();
+    }
+
+    //Mark as read
+    public function markAsRead(){
+        Auth::guard('admin')->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
 }

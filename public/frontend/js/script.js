@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
       method:'post',
       data:{name:name,mobile:mobile,course:course},
       success:function(data){ 
+        console.log(data);
         
         if(data.status =='true'){
           $('#enroll_success').html('<p class="text-success">Enroll success. We will contact you soon.</p>');

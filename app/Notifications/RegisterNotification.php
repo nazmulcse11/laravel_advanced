@@ -7,16 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskNotification extends Notification implements ShouldQueue
+
+class RegisterNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+    public $name = '';
+    public $code = '';
 
-    public $title = '';
 
-    public function __construct($title){
-        $this->title = $title;
+    public function __construct($name,$code){
+         $this->name = $name;
+         $this->code = $code ;
     }
-
 
     public function via($notifiable){
         return ['mail'];
@@ -24,13 +26,10 @@ class TaskNotification extends Notification implements ShouldQueue
 
 
     public function toMail($notifiable){
-        // return (new MailMessage)
-        // ->line($this->name);
-
-        $title = $this->title;
-        return (new MailMessage)->view('email.notification_email',compact('title')) ;
+        $name = $this->name;
+        $code = $this->code;
+        return (new MailMessage)->view('email.account_confirmation',compact('name','code')) ;
     }
-
 
     public function toArray($notifiable){
         return [
